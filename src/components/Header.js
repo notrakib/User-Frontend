@@ -17,13 +17,13 @@ const Header = () => {
       </div>
 
       <div class="flex flex-row w-1/3 justify-around ml-20">
+        <button class="bg-transparent hover:bg-violet-500 h-9 pl-3 pr-3 self-center rounded-md text-slate-200 text-center text-lg font-bold">
+          Home
+        </button>
         <button
           onClick={() => navigate("/users")}
           class="bg-transparent hover:bg-violet-500 h-9 pl-3 pr-3 self-center rounded-md text-slate-200 text-center text-lg font-bold"
         >
-          Home
-        </button>
-        <button class="bg-transparent hover:bg-violet-500 h-9 pl-3 pr-3 self-center rounded-md text-slate-200 text-center text-lg font-bold">
           Users
         </button>
         <button class="bg-transparent hover:bg-violet-500 h-9 pl-3 pr-3 self-center rounded-md text-slate-200 text-center text-lg font-bold">
