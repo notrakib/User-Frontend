@@ -1,79 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import SignHook from "./hooks/Sign.hook";
 
 const Sign = (props) => {
   const navigate = useNavigate();
   const emailRef = useRef();
   const passRef = useRef();
-  const [error, setError] = useState({ email: false, pass: false });
-
-  const signUpHandaler = async () => {
-    if (emailRef.current.value === "") {
-      setError({ email: true });
-      return;
-    }
-
-    if (passRef.current.value === "") {
-      setError({ pass: true });
-      return;
-    }
-
-    setError({ email: false, pass: false });
-
-    const response = await fetch("https://reqres.in/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: emailRef.current.value,
-        password: passRef.current.value,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (data.token) {
-      emailRef.current.value = "";
-      passRef.current.value = "";
-    }
-
-    console.log(data);
-  };
-
-  const signInHandaler = async () => {
-    if (emailRef.current.value === "") {
-      setError({ email: true });
-      return;
-    }
-
-    if (passRef.current.value === "") {
-      setError({ pass: true });
-      return;
-    }
-
-    setError({ email: false, pass: false });
-
-    const response = await fetch("https://reqres.in/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: emailRef.current.value,
-        password: passRef.current.value,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (data.token) {
-      emailRef.current.value = "";
-      passRef.current.value = "";
-    }
-
-    console.log(data);
-  };
+  const { signUpHandaler, signInHandaler, error } = SignHook();
 
   const navigationHandaler = () => {
     emailRef.current.value = "";
@@ -124,7 +57,13 @@ const Sign = (props) => {
         </p>
 
         <button
-          onClick={props.meta ? signUpHandaler : signInHandaler}
+          onClick={
+            props.meta
+              ? () =>
+                  signUpHandaler(emailRef.current.value, passRef.current.value)
+              : () =>
+                  signInHandaler(emailRef.current.value, passRef.current.value)
+          }
           class="w-full h-12 bg-[#6941c6] text-white text-lg font-bold rounded-lg mt-7"
         >
           {props.meta ? "Sign Up" : "Sign In"}
